@@ -1,0 +1,3 @@
+from FlipKartScrapper import FlipKartScrapper
+from SnapDealScrapper import SnapDealScrapper
+from AmazonScrapper import AmazonScrapper
