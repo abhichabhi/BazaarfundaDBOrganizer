@@ -1,0 +1,50 @@
+Pointer Device,INPUT,Pointer Device
+Keyboard,INPUT,Keyboard
+Integrated Camera,INPUT,Web Camera
+Power Supply,POWER,Power Supply
+Standard Battery,POWER,Battery Cell
+Warranty Period,WARRANTY,Warranty Summary
+Resolution,DISPLAY,Resolution
+Screen Size,DISPLAY,Screen Size
+Screen Type,DISPLAY,Screen Type
+Ethernet,COMMUNICATION,Ethernet
+Bluetooth,COMMUNICATION,Bluetooth
+Wireless LAN,COMMUNICATION,Wireless LAN
+Mic In,PORTS/SLOTS,Mic In
+Multi Card Slot,PORTS/SLOTS,Multi Card Slot
+HDMI Port,PORTS/SLOTS,HDMI Port
+USB Port/S,PORTS/SLOTS,USB Port
+RJ45 LAN,PORTS/SLOTS,RJ45 LAN
+Other Ports,PORTS/SLOTS,Other Ports
+Hard Disk Capacity,STORAGE,HDD Capacity
+RPM,STORAGE,RPM
+Hardware Interface,STORAGE,Hardware Interface
+Lock Port,SECURITY,Lock Port
+Brand,GENERAL,Brand
+Serial No.,GENERAL,Part Number
+Model Number,GENERAL,Model ID
+Color,GENERAL,Color
+Utility,GENERAL,Lifestyle
+Expandable Memory,MEMORY,Expandable Memory
+,MEMORY,RAM Frequency
+RAM,MEMORY,System Memory
+Memory Slots,MEMORY,Memory Slots
+Optical Drive,OPTICAL DISK DRIVE,Optical Drive
+Read/Write Speed,OPTICAL DISK DRIVE,Read/Write Speed
+Weight,MACHINE DIMENSIONS,Weight
+Dimension(W*D*H),MACHINE DIMENSIONS,Dimension
+Color,MACHINE DIMENSIONS,Color
+Dedicated Graphics Memory Capacity,GRAPHICS,Dedicated Graphics Memory Capacity
+Dedicated Graphics Memory Type,GRAPHICS,Graphic Processor
+Graphic Processor,GRAPHICS,Dedicated Graphics Memory Type
+Internal Mic,AUDIO,Internal Mic
+Sound Effect,AUDIO,Sound
+Speakers,AUDIO,Speakers
+Operating System,PLATFORM,Operating System
+Architecture,PLATFORM,System Architecture
+Sales Package,IN THE BOX,Sales Package
+Processor Brand,PROCESSOR,Brand
+Cache,PROCESSOR,Cache
+Variant,PROCESSOR,Variant
+Clock Speed,PROCESSOR,Clock Speed
+Processor Name,PROCESSOR,Processor

@@ -1,0 +1,50 @@
+,INPUT,Pointer Device
+,INPUT,Keyboard
+,INPUT,Web Camera
+Average Battery Life (in hours),POWER,Power Supply
+Battery Description,POWER,Battery Cell
+,WARRANTY,Warranty Summary
+Screen Resolution,DISPLAY,Resolution
+Screen Size,DISPLAY,Screen Size
+Notebook Display Technology,DISPLAY,Screen Type
+,COMMUNICATION,Ethernet
+,COMMUNICATION,Bluetooth
+,COMMUNICATION,Wireless LAN
+,PORTS/SLOTS,Mic In
+,PORTS/SLOTS,Multi Card Slot
+Number of HDMI Ports,PORTS/SLOTS,HDMI Port
+Number of USB 2.0 Ports,PORTS/SLOTS,USB Port
+,PORTS/SLOTS,RJ45 LAN
+,PORTS/SLOTS,Other Ports
+Hard Drive Size,STORAGE,HDD Capacity
+,STORAGE,RPM
+Hard Disk Technology,STORAGE,Hardware Interface
+,SECURITY,Lock Port
+Brand,GENERAL,Brand
+,GENERAL,Part Number
+Item model number,GENERAL,Model ID
+Colour,GENERAL,Color
+,GENERAL,Lifestyle
+,MEMORY,Expandable Memory
+,MEMORY,RAM Frequency
+RAM Size,MEMORY,System Memory
+,MEMORY,Memory Slots
+,OPTICAL DISK DRIVE,Optical Drive
+,OPTICAL DISK DRIVE,Read/Write Speed
+Item Weight,MACHINE DIMENSIONS,Weight
+Product Dimensions,MACHINE DIMENSIONS,Dimension
+Colour,MACHINE DIMENSIONS,Color
+Graphics Card Description,GRAPHICS,Dedicated Graphics Memory Capacity
+Graphics Coprocessor,GRAPHICS,Graphic Processor
+Graphics Card Description,GRAPHICS,Dedicated Graphics Memory Type
+,AUDIO,Internal Mic
+Speaker Description,AUDIO,Sound
+Speaker Description,AUDIO,Speakers
+Operating System,PLATFORM,Operating System
+,PLATFORM,System Architecture
+Included Components,IN THE BOX,Sales Package
+Processor Brand,PROCESSOR,Brand
+,PROCESSOR,Cache
+Processor Type,PROCESSOR,Variant
+Processor Speed,PROCESSOR,Clock Speed
+Processor Type,PROCESSOR,Processor

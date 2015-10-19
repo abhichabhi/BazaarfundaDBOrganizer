@@ -6,7 +6,7 @@ class FlipKartScrapper:
 		hxs = HtmlXPathSelector(text=response)
 		specTableList = hxs.select("//table[@class='specTable']").extract()
 		AllProductSpecs = {}
-		AllProductSpecsList = []
+		AllProductSpecsList = {}
 		for specTable in specTableList:
 			specTable = HtmlXPathSelector(text = specTable)
 			specHead = specTable.select("//th[@class='groupHead']/text()").extract()
@@ -35,7 +35,7 @@ class FlipKartScrapper:
 								val = [brand]
 							specSubDict[key[0]] = val[0].strip().encode('utf8')
 					specSubCollection[specHead] = specSubDict
-					AllProductSpecsList.append(specSubCollection)
+					AllProductSpecsList[specHead] = specSubDict
 		AllProductSpecs['specification'] = AllProductSpecsList
 		return AllProductSpecs
 

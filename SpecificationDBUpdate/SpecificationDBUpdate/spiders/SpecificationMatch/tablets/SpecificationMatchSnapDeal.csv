@@ -1,0 +1,48 @@
+SIMs,STORAGE,Memory Card Slot type
+Expandable Storage Capacity,STORAGE,Expandable Storage Capacity
+Storage,STORAGE,Internal Storage
+Box Contents,GENERAL,In The Box
+Brand,GENERAL,Brand
+SIMs,GENERAL,SIM Size
+,GENERAL,Video Call
+3G Through Dongle,GENERAL,3G via Dongle
+,GENERAL,Supported Networks
+Model,GENERAL,Model ID
+Voice Call,GENERAL,Voice Call
+Processor Brand,GENERAL,Processor
+Processor (Core),GENERAL,Processor
+Processor Speed,GENERAL,Processor
+Colour,GENERAL,Color
+SIMs,GENERAL,SIM
+RAM,MEMORY,RAM
+Storage,MEMORY,ROM
+,BUSINESS FEATURES,Mail Features
+,BUSINESS FEATURES,Document Support
+,BUSINESS FEATURES,Other Business features
+,CAMERA,Video Recording
+Front Camera,CAMERA,Secondary Camera
+Other Camera Features,CAMERA,Other Camera Features
+Rear Camera,CAMERA,Primary Camera
+Video Playback,MULTIMEDIA,Video Playback
+Audio Formats Supported,MULTIMEDIA,Audio Formats Supported
+Video Formats Supported,MULTIMEDIA,Video Formats Supported
+Warranty Period,WARRANTY,Warranty Summary
+Display Type,DISPLAY,Display Type
+Display Resolution,DISPLAY,Other Display Features
+Screen Size (in cm),DISPLAY,Other Display Features
+,INTERNET CONNECTIVITY,4G
+,INTERNET CONNECTIVITY,Pre-Installed Browser
+,INTERNET CONNECTIVITY,Other Internet Connectivity Options
+Wifi + 3G Data,INTERNET CONNECTIVITY,Wi-Fi
+3G Calling,INTERNET CONNECTIVITY,3G
+,DIMENSIONS,Weight
+,DIMENSIONS,Dimensions
+Standby Time,BATTERY,Standby Time
+Battery Type,BATTERY,Battery Type
+,CONNECTIVITY,Other Connectivity Features
+Audio Jack,CONNECTIVITY,Audio Jack
+Bluetooth,CONNECTIVITY,Bluetooth
+,CONNECTIVITY,USB
+HDMI,CONNECTIVITY,HDMI
+Operating System,PLATFORM,Operating System
+,PLATFORM,Sensors

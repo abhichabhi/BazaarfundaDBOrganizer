@@ -18,77 +18,84 @@ from websites import SnapDealScrapper
 from websites import AmazonScrapper
 import os.path
 import csv
-import urllib2, urllib
+import requests
 import logging
 class SpecificationScrapper():
 	specificationClient = DBOperations.getMongoDBClient("ProductSpecification")
-	name = "SpecificationScrapper"
+	
 	ProductMasterDBName = "Productmaster"
-	SpecificationCollection = "allProducts"
+	SpecificationCollection = "allproducts"
 	ProductMasterFilePath = "/home/" + getpass.getuser() + "/BazaarfundaSrapperFiles/ProductMaster/MasterFile_Overall.csv"
 	
-	snapDealMatchFileName = "SpecificationMatchSnapDeal.csv"
-	amazonMatchFileName = "SpecificationMatchAmazon.csv"
 	def start_requests(self):
 		AppProducts = self.getURLS()
-		snapDealMatch = self.createMatchDict(self.snapDealMatchFileName)
-		amazonMatch = self.createMatchDict(self.amazonMatchFileName)
-		#start_urls = ["http://www.snapdeal.com/product/blackberry-q10/1368483"]
+		allCategory = [category[4] for category in AppProducts]
+
+		allCategory = list(set(allCategory))
+
+		snapDealSpecificationMatchDict = {}
+		amazonSpecificationMatchDict = {}
+
+		for cat in allCategory:
+			if cat != "Category" and cat != '':
+				snapDealSpecificationMatchDict[cat] = self.createMatchDict('./SpecificationMatch/' + cat + '/SpecificationMatchSnapDeal.csv')
+				amazonSpecificationMatchDict[cat] = self.createMatchDict('./SpecificationMatch/' + cat + '/SpecificationMatchAmazon.csv')
+		
 		for items in AppProducts:
 			product_id = items[0]
 			brand = items[1]
 			productName = items[2]
 			url = items[3]
-
-			# outputFilePath = self.outputFilePath + productName.replace("/","") + ".json"
-			outputFilePath = ""
-			if not DBOperations.isIdPresent(self.specificationClient, self.SpecificationCollection, "product_id", product_id):
-				try:
-					request = urllib2.Request(url)
-					response = urllib.urlopen(url)
-					# response = urllib2.urlopen(url)
-					self.parse(response,url, brand, productName, product_id, snapDealMatch, amazonMatch)
-				except Exception, err:
-					print(traceback.format_exc()), "Error", url
-				# self.parse( meta = {'outputFilePath': outputFilePath,'brand':brand,'productName':productName,'product_id':product_id, 'snapDealMatch':snapDealMatch, 'amazonMatch':amazonMatch})
+			category = items[4]
+			try:
+				snapDealMatch = snapDealSpecificationMatchDict[category]
+				amazonMatch = amazonSpecificationMatchDict[category]
+				# outputFilePath = self.outputFilePath + productName.replace("/","") + ".json"
+				outputFilePath = ""
+				print product_id
+				if not DBOperations.isIdPresent(self.specificationClient, self.SpecificationCollection, "product_id", product_id):
+					try:
+						response = requests.get(url, timeout=5)
+						self.parse(response,url, brand, productName, product_id, snapDealMatch, amazonMatch)
+					except Exception, err:
+						print(traceback.format_exc()), "Error", url, items
+					# self.parse( meta = {'outputFilePath': outputFilePath,'brand':brand,'productName':productName,'product_id':product_id, 'snapDealMatch':snapDealMatch, 'amazonMatch':amazonMatch})
+			except Exception, err:
+				print  (traceback.format_exc())
 
 	def parse(self,response,url, brand, productName, product_id, snapDealMatch, amazonMatch):
 		productJSON = {}
-		
-		
 		if ("flipkart" in url):
 			flipKartScrapper = FlipKartScrapper()
-			productJSON = flipKartScrapper.downloadProductDetails(response.read(), productName, brand)
+			productJSON = flipKartScrapper.downloadProductDetails(response.content, productName, brand)
 		if ("snapdeal" in url):
 			snapdealScrapper = SnapDealScrapper()
-			productJSON = snapdealScrapper.downloadProductDetails(response.read(), productName, brand, snapDealMatch)
+			productJSON = snapdealScrapper.downloadProductDetails(response.content, productName, brand, snapDealMatch)
 		if ("amazon" in url):
 			amazonScrapper = AmazonScrapper()
-			productJSON = amazonScrapper.downloadProductDetails(response.read(), productName, brand, amazonMatch)
+			productJSON = amazonScrapper.downloadProductDetails(response.content, productName, brand, amazonMatch)
 		
 		# self.saveOutPut(productJSON, outputFilePath)
 		productJSON['product_id'] = product_id
 		productJSON['spec_url'] = response.url
-		DBOperations.mongoSaveDocument(productJSON,"allProducts", self.specificationClient, "product_id", False) 
+		# print productJSON
+		DBOperations.mongoSaveDocument(productJSON,self.SpecificationCollection, self.specificationClient, "product_id", False) 
 
 	def getURLS(self):
 		inputFile = self.ProductMasterFilePath
 		fileObj = open(inputFile)
 		ProductList = []
 		reader = csv.reader(fileObj)
-
-		for row in reader:
-			product_id = row[0]
-			brand = row[2]
-			product_name = row[3]
-			product_urlList = row[4:]
-			product_urlList = list(set(product_urlList))
-			try:
-				product_urlList.remove("")
-			except:
-				pass
+		DBMasterClient = DBOperations.getMongoDBClient(self.ProductMasterDBName)
+		masterCursor = DBOperations.getCollectionCursorObject(DBMasterClient, "allproducts")
+		for items in masterCursor:
+			product_id = items['product_id']
+			brand = items['brand']
+			category = items['category']
+			product_name = items['product_name']
+			product_urlList = items['product_urlList']
 			url = self.__getOrderedURL(product_urlList)
-			ProductList.append([product_id,brand,product_name, url])
+			ProductList.append([product_id,brand,product_name, url, category])		
 		return ProductList
 
 	def __getOrderedURL(self, url_list):
