@@ -21,12 +21,24 @@ import os.path
 import csv
 import urllib2, urllib, requests
 import logging
+
+from celery import Celery
+from celery import current_app
+import time
+from celery import signature
+import ConfigParser
+import requests
+
+BROKER_URL = 'mongodb://localhost:27017/jobs'
+celery = Celery('EOD_TASKS',broker=BROKER_URL)
+#Loads settings for Backend to store results of jobs
+celery.config_from_object('celeryconfig')
+
 class PriceScrapper():
 	priceClient = DBOperations.getMongoDBClient("ProductPrice")
 	
 	ProductMasterDBName = "Productmaster"
-	PriceCollection = "allProducts"
-	
+	PriceCollection = "allProducts"	
 	def start_requests(self):
 		AppProducts = self.getURLS()
 		for items in AppProducts:
@@ -37,12 +49,14 @@ class PriceScrapper():
 			urlList = items[3]
 			priceList = []
 			update_time = datetime.datetime.now().strftime('%H:%M:%S')
+			current_dict = DBOperations.getCollectionProduct( self.priceClient, self.PriceCollection, product_id)
 			for url in urlList:
 				# url = "http://www.amazon.in/dp/B00MPDR6PW"
 				print url
 				try:
 					response = requests.get(url)
-					priceDict = self.parse(response)
+					priceDict = self.parse(response, current_dict)
+					priceDict = self.checkForNonZeroPrice(priceDict, current_dict)
 					priceList.append(priceDict)
 				except Exception, err:
 					print(traceback.format_exc()), "Error", url
@@ -53,8 +67,17 @@ class PriceScrapper():
 			allProductPriceDict['priceList'] = priceList
 			allProductPriceDict["update_time"] = update_time
 			DBOperations.mongoSaveDocument(allProductPriceDict, self.PriceCollection, self.priceClient, 'product_id', False)
-	
-	def parse(self,response):
+
+	def checkForNonZeroPrice(self, priceDict, current_dict):
+		if priceDict['price'] == 0:
+			print priceDict['price']
+			for prices in current_dict['priceList']:
+				if prices['website'] == priceDict['website']:
+					priceDict['price'] = prices['price']					
+					break
+		return priceDict
+
+	def parse(self,response,current_dict):
 		discount = 0
 		price = 0
 		stock = 1
@@ -89,7 +112,6 @@ class PriceScrapper():
 		priceDict["rating"] = rating
 		priceDict["shipping"] = shippingCharges
 		priceDict["website"] = eComName
-
 		return priceDict
 
 	def getURLS(self):
@@ -137,8 +159,12 @@ class PriceScrapper():
 					print "error in matching with Flipkart Specification"
 					print row[0]
 		return MatchDict
-
-if __name__ == '__main__':
+		
+@celery.task
+def celeryTask():
 	scrapper = PriceScrapper()
 	scrapper.start_requests()
+
+if __name__ == '__main__':
+	celeryTask()
 

@@ -19,11 +19,13 @@ def mongoSaveDocument(document,collection, client, identifier, versionControl=Fa
     			document["_id"] = priceDoc["_id"]
     			collectionOriginal.save(document)
     		else:
-    			collectionOriginal.insert(document)
-    			
+    			collectionOriginal.insert(document)    			
 
 def getCollectionCursorObject(client, collection):
 	return client[collection].find()
+
+def getCollectionProduct(client, collection,product_id):
+	return client[collection].find_one({'product_id':product_id})
 
 def isIdPresent(client, collection, idKey, idval):
 	val = client[collection].find_one({idKey:idval})
