@@ -29,6 +29,7 @@ class SpecificationScrapper():
 	
 	def start_requests(self):
 		AppProducts = self.getURLS()
+		# AppProducts = [["D11111","HP","HP-1", "http://www.snapdeal.com/product/apple-imac-mf886hna-desktop-4th/633082501991", "desktop"]]
 		allCategory = [category[4] for category in AppProducts]
 
 		allCategory = list(set(allCategory))
@@ -40,7 +41,7 @@ class SpecificationScrapper():
 			if cat != "Category" and cat != '':
 				snapDealSpecificationMatchDict[cat] = self.createMatchDict('./SpecificationMatch/' + cat + '/SpecificationMatchSnapDeal.csv')
 				amazonSpecificationMatchDict[cat] = self.createMatchDict('./SpecificationMatch/' + cat + '/SpecificationMatchAmazon.csv')
-		
+				
 		for items in AppProducts:
 			product_id = items[0]
 			brand = items[1]
@@ -49,6 +50,7 @@ class SpecificationScrapper():
 			category = items[4]
 			try:
 				snapDealMatch = snapDealSpecificationMatchDict[category]
+
 				amazonMatch = amazonSpecificationMatchDict[category]
 				# outputFilePath = self.outputFilePath + productName.replace("/","") + ".json"
 				outputFilePath = ""

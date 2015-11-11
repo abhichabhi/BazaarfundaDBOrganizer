@@ -5,6 +5,7 @@ import requests, os, traceback
 from websites import FlipKartScrapper
 from websites import SnapDealScrapper
 from websites import AmazonScrapper
+import DBOperations
 update_time = datetime.datetime.now().strftime('%Y-%m-%d')
 outputFolderAll  = "/home/" + getpass.getuser() + "/BazaarfundaSrapperFiles/ProductImages/Allimages/"
 outputFolderInc  = "/home/" + getpass.getuser() + "/BazaarfundaSrapperFiles/ProductImages/" + update_time + "/"
@@ -12,11 +13,14 @@ outputFolderInc  = "/home/" + getpass.getuser() + "/BazaarfundaSrapperFiles/Prod
 if not os.path.exists(os.path.dirname(outputFolderInc)):
 	os.makedirs(os.path.dirname(outputFolderInc))
 ProductMasterFilePath = "/home/" + getpass.getuser() + "/BazaarfundaSrapperFiles/ProductMaster/MasterFile_Overall.csv"
+ProductMasterDBName = "Productmaster"
+PriceCollection = "allProducts"	
 def start_requests():
 		AppProducts = getURLS()
 		for items in AppProducts:
 			product_id = items[0]
 			url = items[1]
+			print product_id, url
 			imageFileAll = outputFolderAll +  product_id + ".jpg"
 			imageFileInc = outputFolderInc +  product_id + ".jpg"
 			if not os.path.isfile(imageFileAll):
@@ -28,7 +32,7 @@ def start_requests():
 				
 
 def download_img(url, response, imageFileAll, imageFileInc):
-		print url
+
 		#+ "/" + dateStr + "/" 
 		if ("flipkart" in url):
 			flipKartScrapper = FlipKartScrapper()
@@ -41,22 +45,18 @@ def download_img(url, response, imageFileAll, imageFileInc):
 			amazonScrapper.downloadProductList(response.content, imageFileInc, imageFileAll)
 
 def getURLS():
-		inputFile = ProductMasterFilePath
-		fileObj = open(inputFile)
-		ProductList = []
-		reader = csv.reader(fileObj)
-
-		for row in reader:
-			product_id = row[0]
-			product_urlList = row[4:]
-			product_urlList = list(set(product_urlList))
-			try:
-				product_urlList.remove("")
-			except:
-				pass
-			url = __getOrderedURL(product_urlList)
-			ProductList.append([product_id,url])
-		return ProductList
+	productMasterClient = DBOperations.getMongoDBClient(ProductMasterDBName)
+	cursor = productMasterClient.allproducts.find()
+	ProductList = []
+	for row in cursor:
+		product_id = row['product_id']
+		brand = row['brand']
+		product_name = row['product_name']
+		product_urlList = row['product_urlList']
+		url = __getOrderedURL(product_urlList)
+		ProductList.append([product_id,url])
+	return ProductList
+		
 def __getOrderedURL(url_list):
 		# print filter(lambda x: 'flipkart' in x, url_list)
 		try:

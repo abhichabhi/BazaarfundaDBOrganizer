@@ -17,8 +17,8 @@ def upDateProductRecommendation():
 			itemDict['product_id'] = product_id
 			itemDict['category'] = category
 			itemDict['recommendedProducts'] = recommendedProducts
-			
-			DBOperations.mongoSaveDocument(itemDict,"allReco", ProductRecommendationClient, 'product_id', False)
+			if recommendedProducts != []:
+				DBOperations.mongoSaveDocument(itemDict,"allReco", ProductRecommendationClient, 'product_id', False)
 
 def getProductElementsFromMasterFileRow(row):
 	product_id = row[0]

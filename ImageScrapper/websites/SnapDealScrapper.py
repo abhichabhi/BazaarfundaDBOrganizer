@@ -6,7 +6,12 @@ class SnapDealScrapper:
 		hxs = HtmlXPathSelector(text=response)
 		imageURL = hxs.select('//p[@class="tileImages"]/img/@src').extract()
 		if not imageURL:
+			print "not found"
 			imageURL = hxs.select('//div[@class="cloudzoom-lens"]/img/@src').extract()
+		if not imageURL:
+			print "not found2"
+			# class="jqzoom zoomPad cloudzoom"
+			imageURL = hxs.select('//img[@class="jqzoom zoomPad cloudzoom"]/@src').extract()
 		try:
 			print imageURL
 			imageURL = imageURL[0]

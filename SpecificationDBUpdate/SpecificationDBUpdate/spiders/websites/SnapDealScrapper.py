@@ -12,21 +12,20 @@ class SnapDealScrapper:
 		specDictVal = {}
 		for specs in SpecTableDIV:
 			specs = HtmlXPathSelector(text = specs)
-			fields = specs.select("//tr").extract()
-			
+			fields = specs.select("//tr").extract()			
 			keyValDict = {}
-
 			for field in fields:
 				field = HtmlXPathSelector(text = field)
 				keyVal = field.select("//td/text()").extract()
 				if keyVal:
 					key = keyVal[0]
 					value = keyVal[1]
-
+					print key, value
 					try:
 						snapDealVal = snapDealMatch[key]
 					except:
-						snapDealVal = []
+						snapDealVal = []						
+					print snapDealVal
 					if snapDealVal:
 						try:
 							specDictVal = specDict[snapDealVal[0]]	
@@ -40,35 +39,31 @@ class SnapDealScrapper:
 							specDictVal = {}
 							snapDealDictKey = snapDealVal[1]
 							specDictVal[snapDealDictKey] = value
-							specDict[snapDealVal[0]] = specDictVal
+							specDict[snapDealVal[0]] = specDictVal	
 
-
-					
-		# print specDict
 		specificationDict = {}
-		for specs in specDict:
-			
-			specificationDict[specs] = specDict[specs]
-			
+		for specs in specDict:			
+			specificationDict[specs] = specDict[specs]		
 		allSpecification = {}
-		generalSpecFlag = 0
-		try:
-			generalSpec = specs["GENERAL FEATURES"]
-			generalSpec["Brand"] = brand
-			generalSpec["Model Name"] = productName
-			specs["GENERAL FEATURES"] = generalSpec
-			generalSpecFlag = 1
-		except:
-			pass
+		# generalSpecFlag = 0
+		# try:
+		# 	generalSpec = specs["GENERAL FEATURES"]
+		# 	generalSpec["Brand"] = brand
+		# 	generalSpec["Model Name"] = productName
+		# 	specs["GENERAL FEATURES"] = generalSpec
+		# 	generalSpecFlag = 1
+		# except:
+		# 	pass
 
-		if generalSpecFlag == 0:
-			specificationDict = {}
-			generalSpec = {}
-			generalSpec["Brand"] = brand
-			generalSpec["Model Name"] = productName
-			specificationDict["GENERAL FEATURES"] = generalSpec
+		# if generalSpecFlag == 0:
+		# 	specificationDict = {}
+		# 	generalSpec = {}
+		# 	generalSpec["Brand"] = brand
+		# 	generalSpec["Model Name"] = productName
+		# 	specificationDict["GENERAL FEATURES"] = generalSpec
 
 		allSpecification['specification'] = specificationDict
+		print allSpecification, "#####"
 		return allSpecification
 
 

@@ -4,12 +4,14 @@ Screen Size,DISPLAY,Display Size
 Resolution,DISPLAY,Display Resolution
 ,DISPLAY,HD
 Screen Type,DISPLAY,Display Type
+Display Type,DISPLAY,Display Type
 Webcam,WEBCAM,Built-in Webcam
 Multi Card Slot,CONNECTIVITY,Memory Card Reader
 USB 3.0 Ports,CONNECTIVITY,USB
 USB 2.0 Ports,CONNECTIVITY,USB
 Other Ports,CONNECTIVITY,Headphone Jack
-,CONNECTIVITY,Bluetooth
+BlueTooth,CONNECTIVITY,Bluetooth
+Bluetooth,CONNECTIVITY,Bluetooth
 HDMI Ports,CONNECTIVITY,HDMI
 Mic In,CONNECTIVITY,Microphone Jack
 Keyboard,INPUT DEVICES,Keyboard

@@ -46,27 +46,28 @@ class AmazonScrapper:
 			specificationDict[specs] = specDict[specs]
 			
 		allSpecification = {}
-		generalSpecFlag = 0
-		try:
-			generalSpec = specs["GENERAL FEATURES"]
-			generalSpec["Brand"] = brand
-			generalSpec["Model Name"] = productName
-			specs["GENERAL FEATURES"] = generalSpec
-			generalSpecFlag = 1
-		except:
-			pass
-			# specDictVal = {}
-			# specDictVal["Brand"] = brand
-			# specDictVal["Model Name"] = productName
-			# specs["GENERAL FEATURES"] = specDictVal
-			# break
+		
+		# generalSpecFlag = 0
+		# try:
+		# 	generalSpec = specs["GENERAL FEATURES"]
+		# 	generalSpec["Brand"] = brand
+		# 	generalSpec["Model Name"] = productName
+		# 	specs["GENERAL FEATURES"] = generalSpec
+		# 	generalSpecFlag = 1
+		# except:
+		# 	pass
+		# 	# specDictVal = {}
+		# 	# specDictVal["Brand"] = brand
+		# 	# specDictVal["Model Name"] = productName
+		# 	# specs["GENERAL FEATURES"] = specDictVal
+		# 	# break
 			
-		if generalSpecFlag == 0:
-			specificationDict = {}
-			generalSpec = {}
-			generalSpec["Brand"] = brand
-			generalSpec["Model Name"] = productName
-			specificationDict["GENERAL FEATURES"] = generalSpec
+		# if generalSpecFlag == 0:
+		# 	specificationDict = {}
+		# 	generalSpec = {}
+		# 	generalSpec["Brand"] = brand
+		# 	generalSpec["Model Name"] = productName
+		# 	specificationDict["GENERAL FEATURES"] = generalSpec
 			
 
 		allSpecification['specification'] = specificationDict

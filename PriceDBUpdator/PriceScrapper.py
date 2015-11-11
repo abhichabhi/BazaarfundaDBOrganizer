@@ -21,7 +21,6 @@ import os.path
 import csv
 import urllib2, urllib, requests
 import logging
-
 from celery import Celery
 from celery import current_app
 import time

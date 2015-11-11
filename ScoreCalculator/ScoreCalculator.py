@@ -3,6 +3,7 @@ from pymongo import MongoClient
 from DBOperations import *
 scoreClient = getMongoDBClient("Productratings")
 scoreCollection = "scores"
+
 def calculateScore(category):
 	destFile = "/home/stratdecider/AdminRandomFiles/AllScores/"+ category +"_AllScore.csv"
 	mongoPrice = MongoClient('localhost', 27017)["ProductPrice"]
@@ -14,8 +15,7 @@ def calculateScore(category):
 	writeToFile(csvRow,destFile)
 	buzzDict = mongoCategory['buzzFactor']
 	defaultKeyWeight = mongoCategory['defaultKeyWeight']
-	# print buzzDict['overall']
-	# (keywordrating*weitage)*14+ overall buzz+ price factor
+
 	for product in allCatProducts:
 		product_id  = product['product_id']
 		try:			
@@ -41,7 +41,6 @@ def calculateScore(category):
 		scoreDict['product_id'] = product_id
 		scoreDict['category'] = category
 		mongoSaveDocument(scoreDict,scoreCollection, scoreClient, 'product_id', False)
-
 		csvRow = [product_id, min_price, price_factor, allKeywordsBuzz['overall']['score'], allKeywordsBuzz['overall']['buzzScore'],allKeywordsBuzz['overall']['finalRating']]
 		writeToFile(csvRow,destFile)
 		
@@ -61,6 +60,7 @@ def getBuzzFactorForAllKeywords(buzzDict,mongoRating, product_id, category, defa
 			if keyword != 'overall':
 				keywordScore = defaultKeyWeight[keyword]
 				afterKeywordScore = afterKeywordScore + keywordScore*float(keywordDict['rating'])
+				print keyword, keywordScore, keywordDict['rating']
 				keywordBuzzDict['score'] = float(keywordDict['rating'])
 
 				keywordBuzzDict['buzzScore'] = getFactor(float(keywordDict['rating']), buzzDict[keyword])
@@ -71,6 +71,9 @@ def getBuzzFactorForAllKeywords(buzzDict,mongoRating, product_id, category, defa
 			keywordBuzzDict['buzzScore'] = 0.0
 	afterKeywordScoreBuzz = getFactor(afterKeywordScore, buzzDict['overall'])
 	allKeywordsBuzz['overall'] = {'score':afterKeywordScore, 'buzzScore': afterKeywordScoreBuzz }
+	print "######################"
+	print afterKeywordScore, buzzDict['overall']
+	print allKeywordsBuzz
 	return allKeywordsBuzz
 
 	# buzzKeywordDict = {}
