@@ -47,7 +47,7 @@ class PriceScrapper():
 			productName = items[2]
 			urlList = items[3]
 			priceList = []
-			update_time = datetime.datetime.now().strftime('%H:%M:%S')
+			update_time = datetime.datetime.now().strftime("%y-%m-%d-%H-%M")
 			current_dict = DBOperations.getCollectionProduct( self.priceClient, self.PriceCollection, product_id)
 			for url in urlList:
 				# url = "http://www.amazon.in/dp/B00MPDR6PW"
