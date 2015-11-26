@@ -59,6 +59,7 @@ class PriceScrapper():
 					priceList.append(priceDict)
 				except Exception, err:
 					print(traceback.format_exc()), "Error", url
+			print "Extracting Price for Produt: " , product_id
 				# self.parse( meta = {'outputFilePath': outputFilePath,'brand':brand,'productName':productName,'product_id':product_id, 'snapDealMatch':snapDealMatch, 'amazonMatch':amazonMatch})
 			allProductPriceDict['product_id'] = product_id
 			allProductPriceDict['brand'] = brand
